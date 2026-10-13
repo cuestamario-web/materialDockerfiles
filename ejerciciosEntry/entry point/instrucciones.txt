@@ -1,5 +1,0 @@
-docker build -t ejemplo-entry1 .
-docker run ejemploentry1
---------------------------------------------------------------
-
-docker run ejemploentry2 desde_mi_consola_en_docker
