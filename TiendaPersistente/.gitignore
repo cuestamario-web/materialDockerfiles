@@ -1,0 +1,10 @@
+### IntelliJ IDEA ###
+out/
+.idea/
+*.iml
+
+### Compilados ###
+bin/
+
+### Datos locales de prueba ###
+data/

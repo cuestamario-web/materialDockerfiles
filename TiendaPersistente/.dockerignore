@@ -1,0 +1,7 @@
+# No meter en la imagen lo que no hace falta para compilar.
+# Ojo con data/: si se copiara, los datos de prueba del PC quedarían "horneados" en la imagen.
+data/
+out/
+bin/
+.idea/
+*.iml

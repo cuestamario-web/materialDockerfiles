@@ -1,8 +1,13 @@
 package store;
+
 import java.util.ArrayList;
 
 public class Inventario {
     private ArrayList<Producto> productos;
+
+    public Inventario() {
+        productos = new ArrayList<>();
+    }
 
     public ArrayList<Producto> getProductos() {
         return productos;
@@ -12,17 +17,13 @@ public class Inventario {
         this.productos = productos;
     }
 
-    public Inventario() {
-        productos = new ArrayList<>();
-    }
-
     public void agregarProducto(Producto producto) {
         productos.add(producto);
     }
 
     public Producto buscarProducto(String codigo) {
         for (Producto p : productos) {
-            if (p.getCodigo().equals(codigo)) {
+            if (p.getCodigo().equalsIgnoreCase(codigo)) {
                 return p;
             }
         }
@@ -30,11 +31,16 @@ public class Inventario {
     }
 
     public void mostrarProductos() {
+        if (productos.isEmpty()) {
+            System.out.println("No hay productos registrados.");
+            return;
+        }
         for (Producto p : productos) {
             p.mostrarInfo();
             System.out.println("----------------------");
         }
     }
+
     public void aplicarAumentoGeneral(double porcentaje) {
         if (porcentaje < 0) {
             throw new IllegalArgumentException("Porcentaje invalido");

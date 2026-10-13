@@ -1,4 +1,5 @@
 package store;
+
 import java.util.ArrayList;
 
 public class Tienda {
@@ -18,28 +19,16 @@ public class Tienda {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
+    public Inventario getInventario() {
+        return inventario;
     }
 
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }
 
-    public void setClientes(ArrayList<Cliente> clientes) {
-        this.clientes = clientes;
-    }
-
     public ArrayList<Venta> getVentas() {
         return ventas;
-    }
-
-    public void setVentas(ArrayList<Venta> ventas) {
-        this.ventas = ventas;
     }
 
     public void registrarCliente(Cliente cliente) {
@@ -48,22 +37,38 @@ public class Tienda {
 
     public Cliente buscarCliente(String id) {
         for (Cliente c : clientes) {
-            if (c.getId().equals(id)) {
+            if (c.getId().equalsIgnoreCase(id)) {
                 return c;
             }
         }
         return null;
     }
 
-    public Inventario getInventario() {
-        return inventario;
-    }
-
     public void registrarVenta(Venta venta) {
         ventas.add(venta);
     }
 
+    /** Genera el siguiente código de venta: V001, V002, ... */
+    public String siguienteCodigoVenta() {
+        return String.format("V%03d", ventas.size() + 1);
+    }
+
+    public void mostrarClientes() {
+        if (clientes.isEmpty()) {
+            System.out.println("No hay clientes registrados.");
+            return;
+        }
+        for (Cliente c : clientes) {
+            c.mostrarInfo();
+            System.out.println("----------------------");
+        }
+    }
+
     public void mostrarVentas() {
+        if (ventas.isEmpty()) {
+            System.out.println("No hay ventas registradas.");
+            return;
+        }
         for (Venta v : ventas) {
             v.mostrarDetalle();
             System.out.println("=====================");
