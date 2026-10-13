@@ -8,6 +8,6 @@ bin/
 *.class
 
 ### Datos locales de prueba ###
-data/
+/data/
 src/data/*
 !src/data/.gitkeep
