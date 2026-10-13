@@ -1,0 +1,32 @@
+**** VALORES PERMITIDOS EN LAS VARIABLES ******
+
+ENV  APP_ENTORNO  -> desarrollo | pruebas | produccion
+ENV  APP_COLOR    -> verde | azul | rojo | amarillo | magenta
+
+-----------------------------------------------------------------------------------------------------
+ PARA CREAR LA IMAGEN 
+
+
+Por defecto con Node: docker build -t imagen-node .
+
+Seleccionando el proyecto de Python:docker build --build-arg PROYECTO=python -t imagen-python .
+
+-----------------------------------------------------------------------------------------------------
+
+ PARA CREAR EL CONTENEDOR 
+
+
+Por defecto Node: docker run --rm imagen-node
+
+Por defecto Python: docker run --rm imagen-python
+
+-----------------------------------------------------------------------------------------------------
+
+
+MODIFICANDO VARIABLES
+
+docker run --rm -e APP_NOMBRE=Mario -e APP_ENTORNO=produccion -e APP_COLOR=azul imagen-node
+
+docker run --rm -e APP_NOMBRE=Ana -e APP_ENTORNO=pruebas -e APP_COLOR=amarillo imagen-python
+
+-----------------------------------------------------------------------------------------------------
