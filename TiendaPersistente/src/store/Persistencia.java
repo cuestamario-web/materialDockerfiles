@@ -12,8 +12,11 @@ import java.util.List;
  * Se encarga de leer y escribir los archivos .txt de la carpeta de datos.
  *
  * La carpeta es "data" (relativa a donde se ejecuta el programa), salvo que
- * exista la variable de entorno DATA_DIR. Dentro del contenedor la carpeta es
- * /app/data, y ahí es donde se monta el volumen.
+ * exista la variable de entorno DATA_DIR. Dentro del contenedor el programa
+ * corre en /app/src, así que la carpeta es /app/src/data: el VOLUME del Dockerfile.
+ *
+ * Los archivos NO se crean al arrancar: cada .txt aparece la primera vez que
+ * se guarda algo de ese tipo (primer producto, primer cliente, primera venta).
  */
 public class Persistencia {
 
@@ -31,25 +34,10 @@ public class Persistencia {
         archivoProductos = carpeta.resolve("productos.txt");
         archivoClientes = carpeta.resolve("clientes.txt");
         archivoVentas = carpeta.resolve("ventas.txt");
-        prepararArchivos();
     }
 
     public Path getCarpeta() {
         return carpeta;
-    }
-
-    /** Crea la carpeta y los archivos vacíos si todavía no existen. */
-    private void prepararArchivos() {
-        try {
-            Files.createDirectories(carpeta);
-            for (Path archivo : List.of(archivoProductos, archivoClientes, archivoVentas)) {
-                if (Files.notExists(archivo)) {
-                    Files.createFile(archivo);
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("No se pudo preparar la carpeta de datos: " + carpeta, e);
-        }
     }
 
     // ===================== Cargar =====================
@@ -98,6 +86,10 @@ public class Persistencia {
     // ===================== Utilidades =====================
 
     private List<String> leerLineas(Path archivo) {
+        // Si el archivo todavía no existe es porque no se ha registrado nada de ese tipo
+        if (Files.notExists(archivo)) {
+            return new ArrayList<>();
+        }
         try {
             List<String> lineas = new ArrayList<>();
             for (String linea : Files.readAllLines(archivo, StandardCharsets.UTF_8)) {
@@ -113,6 +105,9 @@ public class Persistencia {
 
     private void escribirLineas(Path archivo, List<String> lineas) {
         try {
+            // En Docker la carpeta ya existe (VOLUME); esto es por si se ejecuta en el PC sin ella
+            Files.createDirectories(carpeta);
+            // Files.write crea el archivo si no existe y lo reemplaza si ya existe
             Files.write(archivo, lineas, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("No se pudo escribir " + archivo, e);

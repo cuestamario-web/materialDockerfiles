@@ -5,6 +5,9 @@ out/
 
 ### Compilados ###
 bin/
+*.class
 
 ### Datos locales de prueba ###
 data/
+src/data/*
+!src/data/.gitkeep
