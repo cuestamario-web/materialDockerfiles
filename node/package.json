@@ -1,0 +1,12 @@
+{
+  "name": "proyecto-node",
+  "version": "1.0.0",
+  "description": "Proyecto Node.js para el ejercicio de ARG y ENV en Dockerfiles",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "chalk": "4.1.2"
+  }
+}
